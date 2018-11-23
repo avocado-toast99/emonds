@@ -34,7 +34,8 @@ public class Emonds_algorithm {
         int sink = 6;
         ArrayList AugPaths = new ArrayList();
         int max = EM(Graph, src, sink,AugPaths);
-        System.out.println("poaths");
+        
+        System.out.println("Paths: ");
         for (int i = 0; i < AugPaths.size(); i++) {
             System.out.print(AugPaths.get(i) );
             if ((int)AugPaths.get(i) == 6) {
@@ -45,6 +46,7 @@ public class Emonds_algorithm {
             }
        //     System.out.println("");
         }
+        
         System.out.println("");
         System.out.println("max flow " + max);
         
@@ -61,28 +63,28 @@ public class Emonds_algorithm {
   
         // Create a queue, enqueue source vertex and mark 
         // source vertex as visited 
-        Queue<Integer> queue = new LinkedList<Integer>(); 
-        queue.add(src); 
+        QueueLL Queue = new QueueLL();
+        Queue.enqueue(src); 
         visited[src] = true; 
-        parent[src]=-1; 
-  
+       
         // Standard BFS Loop 
-        while (queue.size()!=0) 
+        while (!Queue.isEmpty()) 
         { 
-            int u = queue.poll(); 
+            int u = Queue.peek(); 
   
-            
             for (int v=0; v<graph.length; v++) 
             { 
                 if (visited[v]==false && graph[u][v] > 0) 
                 { 
                    //  AugPaths.add(v);
-                    queue.add(v); 
+                    Queue.enqueue(v); 
                     parent[v] = u; 
                     visited[v] = true; 
                 } 
             }
+         
             
+            Queue.dequeue();
         } 
       //  AugPaths.add(src);
   
@@ -137,7 +139,7 @@ public class Emonds_algorithm {
                 path_flow = Math.min(path_flow, rGraph[u][v]); 
             }
                 
-   
+  
             // update residual capacities of the edges and 
             // reverse edges along the path 
             for (v=t; v != s; v=parent[v]) 
